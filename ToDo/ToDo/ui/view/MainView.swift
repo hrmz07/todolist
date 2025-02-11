@@ -42,43 +42,21 @@ struct MainView: View {
                     Text("A simple SwiftUI Todo List App")
                         .foregroundStyle(.white)
                         .padding()
-                    LazyVGrid(columns: [GridItem(.flexible(minimum: 300)),GridItem(.flexible())],  alignment: .leading, spacing: 20) {
+                    List {
                         ForEach(viewModel.dataListe){ kisi in
                             NavigationLink(destination: DetailView(dataList: kisi)){
                                 DoRows(list: kisi)
                                     
                             }
+                            .listRowBackground(Color.clear)
                             
-                            Button {
-                                        showAlert = true
-                                    } label: {
-                                        Image(systemName: "trash")
-                                            .foregroundStyle(Color("TextColor1"))
+                            
+                        }
+                        .onDelete(perform: sil)
 
-                                    }
-                                    .alert("Uyarı", isPresented: $showAlert) {
-                                        Button("Tamam", role: .destructive) {
-                                            viewModel.sil(id: kisi.id!)
-                                            viewModel.kisileriYukle()
-                                            //print("Sil Tıklandı \(kisi.id)")
-                                        }
-                                        Button("İptal", role: .cancel) { }
-                                    } message: {
-                                        Text("Silme işlemini onaylıyor musunuz?")
-                                    }
-                            
-//                            Image(systemName: "trash")
-//                                .onTapGesture {
-//                                  
-//                                    viewModel.sil(id: kisi.id!)
-//                                    viewModel.kisileriYukle()
-//                                    print("Sil Tıklandı \(kisi.id)")
-//                                    
-//                                    
-//                                }
-                        }//.onDelete(perform: sil)
-                    }
-                    .padding()
+                    }.scrollContentBackground(.hidden)
+                     .background(Color("MainColor"))
+                     
                     Spacer()
                 }
                 
